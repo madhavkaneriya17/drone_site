@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cyber Drone Flight • 3D Gamified Portfolio</title>
+  <meta name="description" content="Pilot a futuristic cyber quadcopter drone through 3D alpine mountains along a glowing blue flight corridor to explore an interactive portfolio.">
+  <link rel="stylesheet" href="style.css?v=7.5">
+
+  <!-- Three.js ES Module Importmap -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <!-- 3D WebGL Canvas Container -->
+  <div id="canvas-container"></div>
+
+  <!-- Cinematic Vignette & Atmospheric Filter -->
+  <div class="cinematic-vignette"></div>
+
+  <!-- Corridor Out-Of-Bounds Warning Overlays -->
+  <div id="corridor-warning-overlay"></div>
+  <div id="corridor-alert-banner">
+    <span>⚠️</span>
+    <span>FLIGHT CORRIDOR WARNING • Return to Blue Track</span>
+  </div>
+
+  <!-- Master Flight HUD Interface -->
+  <div class="hud-layer">
+    <!-- Top Header -->
+    <header class="hud-header">
+      <div class="hud-brand">
+        <div class="drone-logo-icon">🛸</div>
+        <div class="drone-title-group">
+          <h1>CYBER DRONE // MK-IV</h1>
+          <span>Alpine Recon • Spline Vector HUD</span>
+        </div>
+      </div>
+
+      <!-- Center Destination Tracker with Quick Next/Prev Controls -->
+      <div class="hud-target-pill" id="hud-target-pill">
+        <button class="hud-nav-btn" id="btn-prev-zone" title="Previous Zone (Q)">◀</button>
+        <div class="beacon-pulse"></div>
+        <div class="hud-target-info">
+          <span class="label">Target Checkpoint</span>
+          <span class="name" id="current-target-name">Zone 01: Alpine Base (Home)</span>
+        </div>
+        <button class="hud-nav-btn" id="btn-next-zone" title="Next Zone (E)">▶</button>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="hud-actions">
+        <button class="hud-btn highlight" id="btn-camera-toggle" title="Switch Camera Mode: Chase / Cockpit / Panoramic VIP Tour (V)">
+          <span id="cam-icon">🎥</span>
+          <span id="cam-label">Chase (V)</span>
+        </button>
+        <button class="hud-btn highlight" id="btn-autocruise" title="Toggle Auto-Cruise Pilot (C)">
+          <span id="cruise-icon">▶</span>
+          <span id="cruise-label">Auto-Cruise</span>
+        </button>
+        <button class="hud-btn" id="btn-fast-travel" title="Fast Travel Menu">
+          <span>⚡</span>
+          <span>Fast Travel</span>
+        </button>
+        <button class="hud-btn" id="btn-audio-toggle" title="Toggle Sound">
+          <span id="audio-icon">🔇</span>
+          <span id="audio-label">Sound OFF</span>
+        </button>
+        <button class="hud-btn" id="btn-reset-drone" title="Reset Drone to nearest track (R)">
+          <span>↺</span>
+          <span>Reset (R)</span>
+        </button>
+        <button class="hud-btn" id="btn-help-toggle" title="Show / Hide Controls Guide">
+          <span>?</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Top Approaching Stage Popup Banner -->
+    <div class="approaching-stage-banner" id="approaching-stage-banner">
+      <div class="approaching-badge">
+        <span class="approaching-beacon"></span>
+        <span>APPROACHING STAGE</span>
+      </div>
+      <div class="approaching-main">
+        <span class="approaching-icon" id="approaching-icon">🚀</span>
+        <div class="approaching-text">
+          <h3 id="approaching-title">Zone 02: Pilot Profile (About Me)</h3>
+          <p id="approaching-desc">Landing platform in range • Press TAB or click Skip</p>
+        </div>
+        <div class="approaching-dist-badge" id="approaching-dist">35M</div>
+      </div>
+    </div>
+
+    <!-- Middle Gauges: Airspeed, Altitude -->
+    <div class="hud-mid-row">
+      <!-- Airspeed Gauge -->
+      <div class="flight-gauge">
+        <div class="gauge-title">AIRSPEED</div>
+        <div class="gauge-value" id="hud-airspeed">0</div>
+        <div class="gauge-unit">KM / H</div>
+      </div>
+
+      <!-- Altitude Gauge -->
+      <div class="flight-gauge">
+        <div class="gauge-title">ALTITUDE</div>
+        <div class="gauge-value" id="hud-altitude">120</div>
+        <div class="gauge-unit">METERS (ASL)</div>
+      </div>
+    </div>
+
+    <!-- Bottom Controls Guide & Radar -->
+    <footer class="hud-footer">
+      <!-- Flight Controls Quick Card -->
+      <div class="controls-card" id="controls-card">
+        <h4>
+          <span>Simple Flight Controls</span>
+          <span style="font-size: 0.65rem; color: var(--cyan-neon);">Auto-Stabilized</span>
+        </h4>
+        <div class="controls-grid">
+          <div class="control-item">
+            <kbd class="key-kbd">W</kbd> / <kbd class="key-kbd">↑</kbd>
+            <span>Fly Forward (Auto-Altitude)</span>
+          </div>
+          <div class="control-item">
+            <kbd class="key-kbd">A</kbd> / <kbd class="key-kbd">D</kbd>
+            <span>Steer Left / Right (Auto-Bank)</span>
+          </div>
+          <div class="control-item">
+            <kbd class="key-kbd">S</kbd> / <kbd class="key-kbd">↓</kbd>
+            <span>Brake / Hover Halt</span>
+          </div>
+          <div class="control-item">
+            <kbd class="key-kbd">C</kbd>
+            <span>Toggle Auto-Cruise Pilot</span>
+          </div>
+          <div class="control-item">
+            <kbd class="key-kbd">Q</kbd> / <kbd class="key-kbd">E</kbd>
+            <span>Prev / Next Checkpoint</span>
+          </div>
+          <div class="control-item">
+            <kbd class="key-kbd">TAB</kbd>
+            <span>Skip Approaching Stage</span>
+          </div>
+          <div class="control-item">
+            <kbd class="key-kbd">R</kbd>
+            <span>Recenter onto Blue Track</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Virtual Touch Controls for Mobile/Tablet or Manual Click -->
+      <div class="touch-controls" id="touch-controls">
+        <div class="touch-cluster">
+          <div></div>
+          <button class="touch-btn" id="btn-t-up" title="Pitch Forward">▲</button>
+          <div></div>
+          <button class="touch-btn" id="btn-t-left" title="Steer Left">◀</button>
+          <div></div>
+          <button class="touch-btn" id="btn-t-right" title="Steer Right">▶</button>
+          <div></div>
+          <button class="touch-btn" id="btn-t-down" title="Reverse / Brake">▼</button>
+          <div></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <button class="touch-btn" id="btn-t-ascend" style="width: 44px; height: 44px;" title="Ascend">↥</button>
+          <button class="touch-btn" id="btn-t-descend" style="width: 44px; height: 44px;" title="Descend">↧</button>
+        </div>
+      </div>
+
+      <!-- Circular 3D Minimap Radar -->
+      <div class="radar-container">
+        <div class="radar-header">
+          <span>RADAR // TELEMETRY</span>
+          <span id="corridor-dist-label" style="color: var(--cyan-neon);">OFFSET: 0.0M</span>
+        </div>
+        <div class="radar-wrapper" id="radar-wrapper" title="Click any zone marker to fast warp">
+          <canvas id="radar-canvas" width="200" height="200"></canvas>
+          <div class="radar-sweep"></div>
+        </div>
+        <div class="radar-controls">
+          <span class="radar-hint">Click dot to warp</span>
+          <div style="display: flex; gap: 4px;">
+            <button class="radar-btn" id="btn-radar-minus">-</button>
+            <button class="radar-btn" id="btn-radar-plus">+</button>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Bottom Skip Stage Floating Action Button -->
+  <div class="skip-stage-container" id="skip-stage-container">
+    <button class="btn-skip-stage" id="btn-skip-stage" title="Skip this checkpoint (Press Tab)">
+      <span class="skip-btn-icon">⏩</span>
+      <div class="skip-btn-content">
+        <span class="skip-btn-title">SKIP STAGE (<span id="skip-stage-name">Zone 02</span>)</span>
+        <span class="skip-btn-sub">Bypass platform landing & continue route</span>
+      </div>
+      <kbd class="skip-kbd">TAB</kbd>
+    </button>
+  </div>
+
+  <!-- Gate Entry Toast Prompt -->
+  <div id="gate-prompt-toast">
+    <span class="toast-icon">⚡</span>
+    <span class="toast-text" id="toast-text">Hovering in Checkpoint Ring</span>
+    <span class="toast-key">[E] Inspect</span>
+  </div>
+
+  <!-- In-Game Page Viewer Modal (iframe) -->
+  <div class="modal-overlay" id="page-viewer-modal">
+    <div class="page-viewer-box" id="page-viewer-box">
+      <div class="page-viewer-header">
+        <div class="page-viewer-title-group">
+          <div class="gate-status-pill" id="modal-gate-status">● LANDED ON HELIPAD</div>
+          <h3 id="modal-page-title">Zone 1: Welcome & Overview</h3>
+        </div>
+        <div class="page-viewer-tools">
+          <button class="btn-modal-continue" id="btn-modal-continue" title="Take off and fly to next zone">
+            <span>🚀 Take Off & Next Zone ▶</span>
+          </button>
+          <button class="tool-icon-btn" id="btn-modal-fullscreen" title="Toggle Fullscreen">⛶</button>
+          <button class="tool-icon-btn" id="btn-modal-close" title="Close Page & Take Off">✕</button>
+        </div>
+      </div>
+      <iframe class="page-viewer-iframe" id="page-viewer-frame" src="pages/home.html" title="Portfolio Content"></iframe>
+      <div class="page-viewer-footer">
+        <div class="modal-footer-hint">Press <strong>[W]</strong>, <strong>[Space]</strong>, or <strong>[Esc]</strong> • Or click to fly</div>
+        <button class="btn-modal-footer-continue" id="btn-modal-footer-continue">
+          <span>🚀 Take Off & Fly Forward Along Route ▶</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fast Travel Selection Modal -->
+  <div class="modal-overlay" id="fast-travel-modal">
+    <div class="fast-travel-box">
+      <div class="fast-travel-header">
+        <div>
+          <h2 style="font-size: 1.5rem; font-weight: 800; color: #fff;">Fast Travel Waypoint Directory</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">Instantly warp your drone to any alpine flight checkpoint</p>
+        </div>
+        <button class="tool-icon-btn" id="btn-ft-close">✕</button>
+      </div>
+
+      <div class="fast-travel-grid" id="fast-travel-grid">
+        <!-- Rendered dynamically by main.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Flight Application Logic -->
+  <script type="module" src="main.js?v=7.9"></script>
+</body>
+</html>

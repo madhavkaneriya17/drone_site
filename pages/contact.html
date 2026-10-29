@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zone 4: Contact • Cyber Drone Portfolio</title>
+  <link rel="stylesheet" href="pages.css">
+</head>
+<body>
+  <header class="page-header">
+    <div>
+      <div class="zone-badge">Checkpoint 04 // Comms Relay Tower</div>
+      <h1 class="page-title">Initiate Transmission</h1>
+      <p class="page-subtitle">Available for freelance architecture, 3D engineering, and high-impact collaborations</p>
+    </div>
+  </header>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.8rem;">
+    <!-- Contact Form -->
+    <div class="card">
+      <div class="card-icon">📡</div>
+      <h3>Direct Message Uplink</h3>
+      <p style="margin-bottom: 1.2rem;">Drop a note below and our comms relay will route it instantly.</p>
+      
+      <form id="contactForm" onsubmit="event.preventDefault(); document.getElementById('msgStatus').style.display='block';">
+        <div class="form-group">
+          <label class="form-label">Callsign / Name</label>
+          <input type="text" class="form-input" placeholder="e.g. Commander Sarah" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Signal Address / Email</label>
+          <input type="email" class="form-input" placeholder="commander@orbit.tech" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Transmission / Message</label>
+          <textarea class="form-textarea" rows="4" placeholder="Let's build a groundbreaking 3D web experience..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+          <span>🚀 Transmit Payload</span>
+        </button>
+      </form>
+      <div id="msgStatus" style="display:none; margin-top: 1rem; color: var(--cyan-neon); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; text-align: center;">
+        ✓ Transmission encrypted & dispatched to command!
+      </div>
+    </div>
+
+    <!-- Communication Coordinates -->
+    <div>
+      <div class="card" style="margin-bottom: 1.2rem;">
+        <div class="card-icon">🛰️</div>
+        <h3>Direct Channels</h3>
+        <p style="margin-bottom: 0.8rem;">Reach out via open frequencies:</p>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem;">
+          <div style="display: flex; justify-content: space-between;">
+            <span style="color: var(--text-dim);">Email:</span>
+            <span style="color: var(--cyan-neon);">pilot@droneportfolio.dev</span>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span style="color: var(--text-dim);">GitHub:</span>
+            <span style="color: var(--cyan-neon);">github.com/aero-pilot</span>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span style="color: var(--text-dim);">Twitter / X:</span>
+            <span style="color: var(--cyan-neon);">@AeroGraphics3D</span>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span style="color: var(--text-dim);">Location:</span>
+            <span style="color: #fff;">Alpine Grid, Global Remote</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🟢</div>
+        <h3>Status: Flight Ready</h3>
+        <p>Currently accepting select high-complexity contracts for Q1/Q2. Response window under 24 hours.</p>
+        <div class="tag-list" style="margin-top: 1rem;">
+          <span class="tag highlight">Active Availability</span>
+          <span class="tag">NDA Friendly</span>
+          <span class="tag">Global Remote</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

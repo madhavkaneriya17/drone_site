@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zone 9: Gallery • Cyber Drone Portfolio</title>
+  <link rel="stylesheet" href="pages.css">
+  <style>
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .gallery-item {
+      background: rgba(13, 22, 41, 0.7);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .gallery-item:hover {
+      transform: translateY(-5px);
+      border-color: var(--cyan-neon);
+      box-shadow: 0 12px 30px rgba(0, 212, 255, 0.25);
+    }
+    .gallery-preview {
+      height: 170px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gallery-info {
+      padding: 1.2rem;
+    }
+    .art-1 { background: linear-gradient(135deg, #0b192e, #1e3a8a, #00d4ff); }
+    .art-2 { background: linear-gradient(135deg, #180d2b, #4c1d95, #c084fc); }
+    .art-3 { background: linear-gradient(135deg, #042f2e, #065f46, #34d399); }
+    .art-4 { background: linear-gradient(135deg, #311308, #7c2d12, #fb923c); }
+    .art-5 { background: linear-gradient(135deg, #0f172a, #1e293b, #38bdf8); }
+    .art-6 { background: linear-gradient(135deg, #1e1b4b, #3730a3, #818cf8); }
+    
+    .vector-symbol {
+      font-size: 3.2rem;
+      filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.6));
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <div>
+      <div class="zone-badge">Checkpoint 09 // Visual Sensor Array</div>
+      <h1 class="page-title">Media & Concept Gallery</h1>
+      <p class="page-subtitle">Visual captures, architectural wireframes, and aesthetic experiments</p>
+    </div>
+  </header>
+
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <div class="gallery-preview art-1">
+        <span class="vector-symbol">🏔️</span>
+      </div>
+      <div class="gallery-info">
+        <h3>Alpine Ridge Shaders</h3>
+        <p>Raymarched multi-fractal mountain heights with altitude-dependent snow and moss scattering.</p>
+        <span class="tag highlight">GLSL Shader</span>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gallery-preview art-2">
+        <span class="vector-symbol">🚁</span>
+      </div>
+      <div class="gallery-info">
+        <h3>Quadcopter Core Chassis</h3>
+        <p>3D aerodynamic carbon-fiber frame with gyroscopic gimbal core and glowing blue plasma thrusters.</p>
+        <span class="tag highlight">Procedural Mesh</span>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gallery-preview art-3">
+        <span class="vector-symbol">🌲</span>
+      </div>
+      <div class="gallery-info">
+        <h3>Sub-Alpine Pine Valley</h3>
+        <p>Procedural instanced low-poly pine forest scattered organically across mountain valleys.</p>
+        <span class="tag highlight">Instancing 3D</span>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gallery-preview art-4">
+        <span class="vector-symbol">💫</span>
+      </div>
+      <div class="gallery-info">
+        <h3>Flight Ribbon Spline</h3>
+        <p>Catmull-Rom mathematical flight corridor with pulsating bloom emission and boundary physics.</p>
+        <span class="tag highlight">Math & Splines</span>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gallery-preview art-5">
+        <span class="vector-symbol">🧭</span>
+      </div>
+      <div class="gallery-info">
+        <h3>Cyber Flight HUD</h3>
+        <p>Real-time vector artificial horizon, altitude ladder, speed telemetry, and dynamic radar sweep.</p>
+        <span class="tag highlight">Spatial UI</span>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gallery-preview art-6">
+        <span class="vector-symbol">⚡</span>
+      </div>
+      <div class="gallery-info">
+        <h3>Holographic Gate Ring</h3>
+        <p>Floating neon beacon gate with vertical particle pillar and dual-sided proximity trigger.</p>
+        <span class="tag highlight">Interaction</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
